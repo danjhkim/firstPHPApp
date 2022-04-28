@@ -1,3 +1,24 @@
+<?php 
+
+session_start();
+ 
+//this means if the query string for the url has the text "noname"
+//unset the session variable
+if($_SERVER['QUERY_STRING'] == 'noname') {
+    unset($_SESSION['name']);
+    //this unsets all
+    session_unset();
+}
+// retrieving the session info
+$name = $_SESSION['name'] ?? "Guest";
+
+
+if(isset($_COOKIE['gender'])) {
+    $gender = $_COOKIE['gender'] ?? 'UNKNOWN';
+  } 
+
+?>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,11 +35,24 @@
         color: #cbb09c !important;
     }
 
-    form {
+    .addForm {
         max-width: 460px;
         margin: 20px auto;
         padding: 20px;
         box-sizing: border-box;
+    }
+
+    .menuBlock {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .pizza {
+        width: 100px;
+        margin: 40px auto -30px;
+        display: block;
+        position: relative;
+        top: -30px;
     }
     </style>
 </head>
@@ -28,6 +62,8 @@
         <div class="container">
             <a href="index.php" class="brand-logo brand-text">Ninja Pizza</a>
             <ul id="nav-mobile" class="right hide-on-small-and-down">
+                <li class="grey-text">Hello <?php echo htmlspecialchars($name) ?>!</li>
+                <li class="grey-text">(<?php echo htmlspecialchars($gender) ?>)</li>
                 <li><a href="add.php" class="btn brand z-depth-0">Add a Pizza</a></li>
             </ul>
         </div>
